@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Suraksha Kavach',
+  title: 'Samrakshini',
   description: 'AI-Powered SOS & Community Safety Network',
 };
 

@@ -45,7 +45,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <ShieldCheck className="h-7 w-7 group-data-[collapsible=icon]:h-6 group-data-[collapsible=icon]:w-6" />
               </Button>
               <h1 className="text-xl font-semibold text-primary group-data-[collapsible=icon]:hidden">
-                Suraksha Kavach
+                Samrakshini
               </h1>
             </Link>
           </SidebarHeader>
@@ -77,7 +77,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <header className="sticky top-0 z-10 flex items-center h-14 px-4 border-b bg-background md:hidden">
             <SidebarTrigger />
             <Link href="/" className="ml-4">
-              <h1 className="text-lg font-semibold text-primary">Suraksha Kavach</h1>
+              <h1 className="text-lg font-semibold text-primary">Samrakshini</h1>
             </Link>
           </header>
           <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
