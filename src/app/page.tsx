@@ -1,81 +1,89 @@
-import Image from 'next/image';
+'use client';
 import Link from 'next/link';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { placeholderImages } from '@/lib/placeholder-images.json';
-import { Map, Users, HeartHandshake } from 'lucide-react';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from '@/components/ui/button';
+import { Map, Users, HeartHandshake, Phone } from 'lucide-react';
 
 export default function Home() {
-  const heroImage = placeholderImages.find(p => p.id === 'welcome-hero');
+  const handleSOS = () => {
+    // In a real app, this would trigger API calls
+    // For now, it will just show the alert dialog functionality from the panic button
+    console.log("SOS Activated from Home Page!");
+    // You can re-use the logic from PanicButton's `handleSOS` if needed
+  };
 
   return (
-    <div className="flex flex-col gap-8">
-      <Card className="relative overflow-hidden border-none shadow-lg">
-        <div className="bg-gradient-to-r from-primary/80 to-primary/60 absolute inset-0"></div>
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt="Welcome hero image"
-            fill
-            className="object-cover object-center opacity-20 mix-blend-overlay"
-            data-ai-hint={heroImage.imageHint}
-          />
-        )}
-        <div className="relative p-8 md:p-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground font-headline">
-            Welcome to Samrakshni
-          </h1>
-          <p className="mt-2 text-lg text-primary-foreground/90 max-w-2xl">
-            Your safety companion. Stay alert, connected, and empowered. The panic button is always ready when you need it.
-          </p>
-        </div>
-      </Card>
+    <div className="flex flex-col items-center justify-center h-full text-center">
+      <h1 className="text-4xl font-bold text-primary-foreground">
+        Welcome to Samrakshni
+      </h1>
+      <p className="mt-2 text-lg text-muted-foreground max-w-md">
+        Your safety companion. Tap the SOS button in an emergency.
+      </p>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Safety Map</CardTitle>
-            <Map className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Stay Informed</div>
-            <p className="text-xs text-muted-foreground">
-              View real-time incident reports and locate safe zones.
-            </p>
-            <Link href="/map" className="text-sm text-primary hover:underline mt-2 inline-block">View Map →</Link>
-          </CardContent>
-        </Card>
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Community Watch</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Join the Effort</div>
-            <p className="text-xs text-muted-foreground">
-              Report incidents and see updates from trusted members.
-            </p>
-            <Link href="/community" className="text-sm text-primary hover:underline mt-2 inline-block">Visit Community →</Link>
-          </CardContent>
-        </Card>
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Safety Tips</CardTitle>
-            <HeartHandshake className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Learn & Share</div>
-            <p className="text-xs text-muted-foreground">
-              Empower yourself and others with crucial safety knowledge.
-            </p>
-            <Link href="/safety-tips" className="text-sm text-primary hover:underline mt-2 inline-block">Read Tips →</Link>
-          </CardContent>
-        </Card>
+      <div className="my-12">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              aria-label="Activate Panic Button"
+              className="rounded-full w-48 h-48 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl animate-pulse"
+              style={{ animationIterationCount: 'infinite', animationDuration: '2s' }}
+            >
+              <div className="text-5xl font-bold">SOS</div>
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Activate Panic Alert?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will immediately send your live location to your emergency contacts, local authorities, and nearby community members. Are you sure you want to proceed?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleSOS} className="bg-destructive hover:bg-destructive/90 text-destructive-foreground">
+                Yes, I'm in Danger
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Link href="/map" passHref>
+          <Button variant="secondary" className="w-28 h-28 flex flex-col gap-2">
+            <Map className="w-8 h-8" />
+            <span>Safety Map</span>
+          </Button>
+        </Link>
+        <Link href="/community" passHref>
+          <Button variant="secondary" className="w-28 h-28 flex flex-col gap-2">
+            <Users className="w-8 h-8" />
+            <span>Community</span>
+          </Button>
+        </Link>
+        <Link href="/safety-tips" passHref>
+          <Button variant="secondary" className="w-28 h-28 flex flex-col gap-2">
+            <HeartHandshake className="w-8 h-8" />
+            <span>Safety Tips</span>
+          </Button>
+        </Link>
+        <Link href="/settings" passHref>
+          <Button variant="secondary" className="w-28 h-28 flex flex-col gap-2">
+            <Phone className="w-8 h-8" />
+            <span>Emergency Contacts</span>
+          </Button>
+        </Link>
       </div>
     </div>
   );

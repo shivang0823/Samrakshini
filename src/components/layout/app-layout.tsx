@@ -93,10 +93,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             {/* Can add search or other header items here */}
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 relative bg-muted/40">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 relative bg-background">
           {children}
         </main>
-        <PanicButton />
+        {pathname !== '/' && <PanicButton />}
       </div>
     </div>
   );

@@ -60,10 +60,13 @@ export function PanicButton() {
         <AlertDialogTrigger asChild>
           <Button
             aria-label="Activate Panic Button"
-            className="rounded-full w-20 h-20 md:w-24 md:h-24 bg-accent hover:bg-accent/90 text-accent-foreground shadow-2xl animate-pulse"
+            className="rounded-full w-24 h-24 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl animate-pulse"
             style={{ animationIterationCount: 'infinite', animationDuration: '2s' }}
           >
-            <Siren className="w-10 h-10 md:w-12 md:h-12" />
+            <div className="flex flex-col items-center justify-center">
+                <Siren className="w-10 h-10" />
+                <span className="font-bold text-lg">SOS</span>
+            </div>
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
