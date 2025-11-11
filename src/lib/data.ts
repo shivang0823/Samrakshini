@@ -43,6 +43,18 @@ export type SafeSpot = {
     lng: number;
 }
 
+export type Volunteer = {
+  id: string;
+  name: string;
+  avatar: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  etaMinutes: number;
+};
+
+
 export const incidents: Incident[] = [
   {
     id: 'inc1',
@@ -139,4 +151,28 @@ export const emergencyContacts: EmergencyContact[] = [
     relation: 'Friend',
     avatar: 'emergency-contact-2',
   },
+];
+
+export const volunteers: Volunteer[] = [
+  {
+    id: 'vol1',
+    name: 'Arjun Reddy',
+    avatar: 'volunteer-avatar-1',
+    location: { lat: 34.058, lng: -118.245 },
+    etaMinutes: 5,
+  },
+  {
+    id: 'vol2',
+    name: 'Kiran Desai',
+    avatar: 'volunteer-avatar-2',
+    location: { lat: 34.050, lng: -118.240 },
+    etaMinutes: 8,
+  },
+  {
+    id: 'vol3',
+    name: 'Ravi Shankar',
+    avatar: 'volunteer-avatar-3',
+    location: { lat: 34.06, lng: -118.25 },
+    etaMinutes: 12,
+  }
 ];

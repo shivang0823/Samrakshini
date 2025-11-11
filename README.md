@@ -2,7 +2,7 @@
 
 Samrakshni is a comprehensive personal safety application designed to provide a quick and effective way for users to signal for help in emergencies. It's a proactive safety companion that leverages community and technology to create a safer environment.
 
-This application was prototyped in **Firebase Studio**.
+
 
 ## Key Features
 
