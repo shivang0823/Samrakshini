@@ -14,7 +14,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Map, Users, HeartHandshake, Phone } from 'lucide-react';
 import Image from 'next/image';
-import SamrakshniLogo from '@/../public/logo.png';
 
 export default function Home() {
   const handleSOS = () => {
@@ -27,7 +26,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center">
       
-      <Image src={SamrakshniLogo} alt="Samrakshni Logo" width={250} height={60} priority className="mb-4" />
+      <h1 className="text-4xl font-bold text-primary">Samrakshni</h1>
 
       <p className="mt-2 text-lg text-muted-foreground max-w-md">
         Your safety companion. Tap the SOS button in an emergency.

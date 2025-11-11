@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/sheet';
 import { PanicButton } from '@/components/layout/panic-button';
 import { cn } from '@/lib/utils';
-import SamrakshniLogo from '@/../public/logo.png';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
@@ -52,7 +51,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   const Logo = () => (
      <Link href="/" className="flex items-center gap-2 font-semibold text-primary px-4">
-        <Image src={SamrakshniLogo} alt="Samrakshni Logo" width={150} height={40} priority className='w-auto h-auto' />
+        <span className="text-xl">Samrakshni</span>
     </Link>
   )
 
