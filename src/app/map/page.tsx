@@ -1,33 +1,102 @@
-import Image from 'next/image';
+
+'use client';
+
 import {
-  MapPin,
   ShieldCheck,
   AlertTriangle,
 } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { placeholderImages } from '@/lib/placeholder-images.json';
 import { incidents, safeSpots } from '@/lib/data';
+import { GoogleMap, useJsApiLoader, MarkerF, InfoWindow } from '@react-google-maps/api';
+import React from 'react';
 
-// These coordinates are percentages for placing markers on a map image.
-const incidentPositions = [
-  { top: '30%', left: '45%' },
-  { top: '55%', left: '30%' },
-  { top: '70%', left: '60%' },
-];
-const safeSpotPositions = [
-  { top: '25%', left: '65%' },
-  { top: '40%', left: '15%' },
-  { top: '80%', left: '80%' },
-];
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: '0.5rem',
+};
+
+const center = {
+  lat: 34.0522,
+  lng: -118.2437
+};
 
 export default function SafetyMapPage() {
-  const mapImage = placeholderImages.find(p => p.id === 'safety-map');
+  const { isLoaded, loadError } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const [selectedMarker, setSelectedMarker] = React.useState<any>(null);
+
+  const onSelectMarker = (marker: any) => {
+    setSelectedMarker(marker);
+  };
+
+  const mapContent = isLoaded ? (
+     <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={13}
+      >
+        {incidents.map((incident) => (
+          <MarkerF
+            key={incident.id}
+            position={{ lat: incident.location.lat, lng: incident.location.lng }}
+            icon={{
+              url: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="hsl(var(--destructive))" stroke="white" stroke-width="1"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
+              scaledSize: new window.google.maps.Size(40, 40)
+            }}
+            onClick={() => onSelectMarker(incident)}
+          />
+        ))}
+        {safeSpots.map((spot) => (
+          <MarkerF
+            key={spot.id}
+            position={{ lat: spot.lat, lng: spot.lng }}
+            icon={{
+              url: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="rgb(22 163 74)" stroke="white" stroke-width="1"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
+               scaledSize: new window.google.maps.Size(40, 40)
+            }}
+            onClick={() => onSelectMarker(spot)}
+          />
+        ))}
+
+        {selectedMarker && (
+          <InfoWindow
+            position={{ lat: selectedMarker.location?.lat || selectedMarker.lat, lng: selectedMarker.location?.lng || selectedMarker.lng }}
+            onCloseClick={() => setSelectedMarker(null)}
+          >
+            <div>
+              <p className="font-semibold">{selectedMarker.type}: {selectedMarker.name || selectedMarker.location.name}</p>
+              {selectedMarker.description && <p className="text-sm text-muted-foreground">{selectedMarker.description}</p>}
+            </div>
+          </InfoWindow>
+        )}
+      </GoogleMap>
+  ) : <div>Loading map...</div>;
+
+  if (loadError) {
+    return <div>Error loading maps. Please ensure you have a valid Google Maps API key.</div>
+  }
+  
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Google Maps API Key Missing</CardTitle>
+                <CardDescription>
+                    Please add your Google Maps API Key to a `.env.local` file in the root of your project to see the map.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <code className="bg-muted p-2 rounded-md">
+                   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=YOUR_API_KEY
+                </code>
+            </CardContent>
+        </Card>
+    )
+  }
 
   return (
     <div className="grid gap-6 md:grid-cols-3">
@@ -36,62 +105,13 @@ export default function SafetyMapPage() {
           <CardHeader>
             <CardTitle>Interactive Safety Map</CardTitle>
             <CardDescription>
-              Red zones are based on recent incident reports. Green zones are verified safe spots.
+              Red markers are incident reports. Green markers are verified safe spots.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <TooltipProvider>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border">
-                {mapImage && (
-                  <Image
-                    src={mapImage.imageUrl}
-                    alt="Safety Map"
-                    fill
-                    className="object-cover"
-                    data-ai-hint={mapImage.imageHint}
-                  />
-                )}
-                {/* Render incident markers */}
-                {incidents.map((incident, index) => (
-                  <Tooltip key={incident.id}>
-                    <TooltipTrigger asChild>
-                      <div
-                        className="absolute -translate-x-1/2 -translate-y-1/2"
-                        style={{ ...incidentPositions[index % incidentPositions.length] }}
-                      >
-                        <div className="relative">
-                          <MapPin className="h-8 w-8 text-destructive fill-destructive/40" />
-                          <AlertTriangle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 text-destructive-foreground" />
-                        </div>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="font-semibold">{incident.type} at {incident.location.name}</p>
-                      <p className="text-sm text-muted-foreground">{incident.description}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
-                {/* Render safe spot markers */}
-                {safeSpots.map((spot, index) => (
-                  <Tooltip key={spot.id}>
-                    <TooltipTrigger asChild>
-                       <div
-                        className="absolute -translate-x-1/2 -translate-y-1/2"
-                        style={{ ...safeSpotPositions[index % safeSpotPositions.length] }}
-                      >
-                        <div className="relative">
-                          <MapPin className="h-8 w-8 text-green-600 fill-green-500/40" />
-                          <ShieldCheck className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                        </div>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                       <p className="font-semibold">{spot.type}: {spot.name}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
-              </div>
-            </TooltipProvider>
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border">
+                {mapContent}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -103,9 +123,8 @@ export default function SafetyMapPage() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="flex items-center gap-2">
-              <div className="relative w-8 h-8 flex-shrink-0">
-                  <MapPin className="h-8 w-8 text-destructive fill-destructive/40" />
-                  <AlertTriangle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 text-destructive-foreground" />
+              <div className="relative w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="hsl(var(--destructive))" stroke="white" strokeWidth="1"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               </div>
               <div>
                 <p className="font-semibold">Unsafe Zone / Incident</p>
@@ -113,9 +132,8 @@ export default function SafetyMapPage() {
               </div>
             </div>
              <div className="flex items-center gap-2">
-              <div className="relative w-8 h-8 flex-shrink-0">
-                  <MapPin className="h-8 w-8 text-green-600 fill-green-500/40" />
-                  <ShieldCheck className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+              <div className="relative w-8 h-8 flex-shrink-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="rgb(22 163 74)" stroke="white" strokeWidth="1"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
               </div>
               <div>
                 <p className="font-semibold">Safe Spot</p>
