@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Home,
@@ -8,7 +9,6 @@ import {
   Users,
   HeartHandshake,
   Settings,
-  Shield,
   Menu,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,13 +19,14 @@ import {
 } from '@/components/ui/sheet';
 import { PanicButton } from '@/components/layout/panic-button';
 import { cn } from '@/lib/utils';
+import SamrakshniLogo from '@/../public/logo.png';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/map', label: 'Safety Map', icon: Map },
   { href: '/community', label: 'Community', icon: Users },
   { href: '/safety-tips', label: 'Safety Tips', icon: HeartHandshake },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/settings', label: 'Emergency Contacts', icon: Settings },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -49,15 +50,18 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     </nav>
   );
 
+  const Logo = () => (
+     <Link href="/" className="flex items-center gap-2 font-semibold text-primary px-4">
+        <Image src={SamrakshniLogo} alt="Samrakshni Logo" width={150} height={40} priority className='w-auto h-auto' />
+    </Link>
+  )
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/20 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-primary">
-              <Shield className="h-6 w-6" />
-              <span className="">Samrakshni</span>
-            </Link>
+            <Logo />
           </div>
           <div className="flex-1 py-4">
             {sidebarContent}
@@ -79,10 +83,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col p-0">
               <div className="flex h-14 items-center border-b px-4">
-                 <Link href="/" className="flex items-center gap-2 font-semibold text-primary">
-                    <Shield className="h-6 w-6" />
-                    <span className="">Samrakshni</span>
-                </Link>
+                 <Logo />
               </div>
               <div className="py-4">
                 {sidebarContent}
