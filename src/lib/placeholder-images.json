@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "map-view",
+      "description": "A blurred map view for the SOS activated screen.",
+      "imageUrl": "https://images.unsplash.com/photo-1685023621079-73ccaac333a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXAlMjBzYXRlbGxpdGV8ZW58MHx8fHwxNzYyODcyMTQ3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "map satellite"
+    },
+    {
+      "id": "safety-map",
+      "description": "A map for the main safety map page.",
+      "imageUrl": "https://images.unsplash.com/photo-1603466183710-70b84997a93f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjaXR5JTIwbWFwfGVufDB8fHx8MTc2MjgxODc1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city map"
+    },
+    {
+      "id": "user-avatar-1",
+      "description": "Avatar for a trusted contributor.",
+      "imageUrl": "https://images.unsplash.com/photo-1610655507808-a59293f4e332?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MjgwMDA3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "user-avatar-2",
+      "description": "Avatar for a trusted contributor.",
+      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwc21pbGluZ3xlbnwwfHx8fDE3NjI4NDYyMTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person smiling"
+    },
+    {
+      "id": "user-avatar-3",
+      "description": "Avatar for a trusted contributor.",
+      "imageUrl": "https://images.unsplash.com/photo-1573497019236-17f8177b81e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjI4NTE0NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman professional"
+    },
+    {
+      "id": "emergency-contact-1",
+      "description": "Avatar for an emergency contact.",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjI4NTg1MjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "emergency-contact-2",
+      "description": "Avatar for an emergency contact.",
+      "imageUrl": "https://images.unsplash.com/photo-1637611723857-a5f8348c77c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMGxvb2tpbmd8ZW58MHx8fHwxNzYyNzg3NDgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman looking"
+    },
+    {
+      "id": "welcome-hero",
+      "description": "Hero image for the home page.",
+      "imageUrl": "https://images.unsplash.com/photo-1736342182642-e2042084f47c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGNvbmZpZGVudHxlbnwwfHx8fDE3NjI4NDYxMzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman confident"
+    }
+  ]
 }
